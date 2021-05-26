@@ -11,8 +11,6 @@ def modules_vs_all(result_anode, result_cathode, result_thermal, result_all, uni
         percentage_anode[attr] = result_anode.get('Anode')[attr] / result_all.get('All')[attr]
         percentage_cathode[attr] = result_cathode.get('Cathode')[attr] / result_all.get('All')[attr]
         percentage_thermal[attr] = result_thermal.get('Thermal')[attr] / result_all.get('All')[attr]
-    print(percentage_anode)
-    print(result_anode)
 
     percentage_anode_manuforiented = {'a': 0, 'b': 0, 'c': 0, 'd': 0, 'e': 0}
     percentage_cathode_manuforiented = {'a': 0, 'b': 0, 'c': 0, 'd': 0, 'e': 0}
@@ -40,21 +38,117 @@ def modules_vs_all(result_anode, result_cathode, result_thermal, result_all, uni
         quantity = 10000
     elif units == 'e':
         quantity = 50000
+    else:
+        pass
 
-    fig, (ax1, ax2) = plt.subplots(1, 2)
-    fig.suptitle('Mass production rate = '+str(quantity)+ ' units', fontsize=14, fontweight='bold',
-                 bbox={'facecolor': 'yellow', 'alpha': 0.5, 'pad': 10})
-    ax1.pie([percentage_anode[units], percentage_cathode[units], percentage_thermal[units]], colors=color,
-            labels=nombres,
-            autopct="%0.1f %%", textprops={'fontsize': 12}, wedgeprops={"linewidth": 0.5, "edgecolor": "k"})
-    ax1.set_title('Before Manufacturing oriented \ndesign', fontsize=12, bbox={'facecolor': 'gray', 'alpha': 0.5, 'pad': 10})
+    if units != 'All':
+        fig, (ax1, ax2) = plt.subplots(1, 2)
 
-    ax2.pie([percentage_anode_manuforiented[units], percentage_cathode_manuforiented[units], percentage_thermal_manuforiented[units]], colors=color,
-            labels=nombres,
-            autopct="%0.1f %%", textprops={'fontsize': 12}, wedgeprops={"linewidth": 0.5, "edgecolor": "k"})
-    ax2.set_title('After Manufacturing oriented \ndesign', fontsize=12, bbox={'facecolor': 'gray', 'alpha': 0.5, 'pad': 10})
 
-    # Separacion entre subplots ---> wspace
-    # top --> separacion con el título de la gráfica
-    plt.subplots_adjust(wspace=0.5, top=0.85)
+        fig.set_size_inches(9.38, 7.13)
+        fig.suptitle('Mass production rate = '+str(quantity)+ ' units', fontsize=14, fontweight='bold',
+                     bbox={'facecolor': 'yellow', 'alpha': 0.5, 'pad': 10})
+
+        ax1.pie([percentage_anode[units], percentage_cathode[units], percentage_thermal[units]], colors=color,
+                labels=nombres,
+                autopct="%0.1f %%", textprops={'fontsize': 12}, wedgeprops={"linewidth": 0.5, "edgecolor": "k"})
+        ax1.set_title('Before MOD', fontsize=12, bbox={'facecolor': 'gray', 'alpha': 0.5, 'pad': 10})
+
+        ax2.pie([percentage_anode_manuforiented[units], percentage_cathode_manuforiented[units], percentage_thermal_manuforiented[units]], colors=color,
+                labels=nombres,
+                autopct="%0.1f %%", textprops={'fontsize': 12}, wedgeprops={"linewidth": 0.5, "edgecolor": "k"})
+        ax2.set_title('After MOD', fontsize=12, bbox={'facecolor': 'gray', 'alpha': 0.5, 'pad': 10})
+
+
+    else:
+        fig, ((ax1, ax2), (ax3, ax4), (ax5, ax6), (ax7, ax8), (ax9, ax10)) = plt.subplots(5, 2)
+        fig.subplots_adjust(hspace=0.7)
+        fig.set_figheight(15)
+        # *********************************************************
+        units = 'a'
+        ax1.pie([percentage_anode[units], percentage_cathode[units], percentage_thermal[units]], colors=color,
+                labels=nombres,
+                autopct="%0.1f %%", textprops={'fontsize': 12}, wedgeprops={"linewidth": 0.5, "edgecolor": "k"}, radius=1.58)
+        ax1.set_title('Before MOD', fontsize=12, bbox={'facecolor': 'gray', 'alpha': 0.5, 'pad': 10})
+
+        ax2.pie([percentage_anode_manuforiented[units], percentage_cathode_manuforiented[units],
+                 percentage_thermal_manuforiented[units]], colors=color,
+                labels=nombres,
+                autopct="%0.1f %%", textprops={'fontsize': 12}, wedgeprops={"linewidth": 0.5, "edgecolor": "k"}, radius=1.58)
+        ax2.set_title('After MOD', fontsize=12, bbox={'facecolor': 'gray', 'alpha': 0.5, 'pad': 10})
+
+        # *********************************************************
+        units = 'b'
+        ax3.pie([percentage_anode[units], percentage_cathode[units], percentage_thermal[units]], colors=color,
+                labels=nombres,
+                autopct="%0.1f %%", textprops={'fontsize': 12}, wedgeprops={"linewidth": 0.5, "edgecolor": "k"}, radius=1.58)
+        # ax3.set_title('Before MOD', fontsize=12, bbox={'facecolor': 'gray', 'alpha': 0.5, 'pad': 10})
+
+        ax4.pie([percentage_anode_manuforiented[units], percentage_cathode_manuforiented[units],
+                 percentage_thermal_manuforiented[units]], colors=color,
+                labels=nombres,
+                autopct="%0.1f %%", textprops={'fontsize': 12}, wedgeprops={"linewidth": 0.5, "edgecolor": "k"}, radius=1.58)
+        # ax4.set_title('After MOD', fontsize=12, bbox={'facecolor': 'gray', 'alpha': 0.5, 'pad': 10})
+        # *********************************************************
+
+        # *********************************************************
+        units = 'c'
+        ax5.pie([percentage_anode[units], percentage_cathode[units], percentage_thermal[units]], colors=color,
+                labels=nombres,
+                autopct="%0.1f %%", textprops={'fontsize': 12}, wedgeprops={"linewidth": 0.5, "edgecolor": "k"}, radius=1.58)
+        # ax5.set_title('Before MOD', fontsize=12, bbox={'facecolor': 'gray', 'alpha': 0.5, 'pad': 10})
+
+        ax6.pie([percentage_anode_manuforiented[units], percentage_cathode_manuforiented[units],
+                 percentage_thermal_manuforiented[units]], colors=color,
+                labels=nombres,
+                autopct="%0.1f %%", textprops={'fontsize': 12}, wedgeprops={"linewidth": 0.5, "edgecolor": "k"}, radius=1.58)
+        # ax6.set_title('After MOD', fontsize=12, bbox={'facecolor': 'gray', 'alpha': 0.5, 'pad': 10})
+        # *********************************************************
+
+        # *********************************************************
+        units = 'd'
+        ax7.pie([percentage_anode[units], percentage_cathode[units], percentage_thermal[units]], colors=color,
+                labels=nombres,
+                autopct="%0.1f %%", textprops={'fontsize': 12}, wedgeprops={"linewidth": 0.5, "edgecolor": "k"}, radius=1.58)
+        # ax7.set_title('Before MOD', fontsize=12, bbox={'facecolor': 'gray', 'alpha': 0.5, 'pad': 10})
+
+        ax8.pie([percentage_anode_manuforiented[units], percentage_cathode_manuforiented[units],
+                 percentage_thermal_manuforiented[units]], colors=color,
+                labels=nombres,
+                autopct="%0.1f %%", textprops={'fontsize': 12}, wedgeprops={"linewidth": 0.5, "edgecolor": "k"}, radius=1.58)
+        # ax8.set_title('After MOD', fontsize=12, bbox={'facecolor': 'gray', 'alpha': 0.5, 'pad': 10})
+        # *********************************************************
+
+        # *********************************************************
+        units = 'e'
+        ax9.pie([percentage_anode[units], percentage_cathode[units], percentage_thermal[units]], colors=color,
+                labels=nombres,
+                autopct="%0.1f %%", textprops={'fontsize': 12}, wedgeprops={"linewidth": 0.5, "edgecolor": "k"}, radius=1.58)
+        # ax7.set_title('Before MOD', fontsize=12, bbox={'facecolor': 'gray', 'alpha': 0.5, 'pad': 10})
+
+        ax10.pie([percentage_anode_manuforiented[units], percentage_cathode_manuforiented[units],
+                 percentage_thermal_manuforiented[units]], colors=color,
+                labels=nombres,
+                autopct="%0.1f %%", textprops={'fontsize': 12}, wedgeprops={"linewidth": 0.5, "edgecolor": "k"}, radius=1.58)
+        # ax8.set_title('After MOD', fontsize=12, bbox={'facecolor': 'gray', 'alpha': 0.5, 'pad': 10})
+        # *********************************************************
+
+        # Separacion entre subplots ---> wspace
+        # top --> separacion con el título de la gráfica
+    plt.subplots_adjust(wspace=0.5, top=0.98)
+
+    if units == 'a':
+        plt.savefig('1unit.png')
+    elif units == 'b':
+        plt.savefig('100units.png')
+    elif units == 'c':
+        plt.savefig('1000units.png')
+    elif units == 'd':
+        plt.savefig('10000units.png')
+    elif units == 'e':
+        plt.savefig('50000units.png')
+
+
+
+
     plt.show()

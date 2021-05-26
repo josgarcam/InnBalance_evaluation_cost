@@ -4,7 +4,7 @@ from matplotlib.dates import date2num
 import numpy as np
 import datetime
 
-def barras_paralelas( result_anode, result_cathode, result_thermal):
+def barras_paralelas( result_anode, result_cathode, result_thermal, mod):
     # Obtenemos la posicion de cada etiqueta en el eje de X
     x = np.arange(len(result_cathode.get('Cathode')))
     # tamaño de cada barra
@@ -25,7 +25,7 @@ def barras_paralelas( result_anode, result_cathode, result_thermal):
     plt.bar(X + 3*width, datos[3], color="#86C05E", width=width)
     plt.bar(X + 4*width, datos[4], color="black", width=width)
     plt.xticks(X + 0.75, ["Anode", "Cathode", "Thermal"])
-
+    plt.grid()
     # Añadimos las etiquetas de identificacion de valores en el grafico
     ax.set_ylabel('Unitary cost(€)')
     # ax.set_xticks(x)
@@ -35,7 +35,13 @@ def barras_paralelas( result_anode, result_cathode, result_thermal):
 
 
     fig.tight_layout()
-    
-    # Mostramos la grafica con el metodo show()
-    plt.grid()
+    fig.set_size_inches(9.38, 7.13)
+
+    if mod == str(False):
+        print("before")
+        plt.savefig('Before_MOD.png')
+    else:
+
+        plt.savefig('After_MOD.png')
+
     plt.show()

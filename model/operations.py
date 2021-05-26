@@ -8,11 +8,12 @@ def sum_labels(objects, labels):
     for label in labels:
         result[label]={'a':0, 'b':0, 'c':0, 'd':0, 'e':0}
     for obj in objects:
-        result[obj.label]['a'] += obj.a
-        result[obj.label]['b'] += obj.b
-        result[obj.label]['c'] += obj.c
-        result[obj.label]['d'] += obj.d
-        result[obj.label]['e'] += obj.e
+        if obj.a != None:
+            result[obj.label]['a'] += obj.a
+            result[obj.label]['b'] += obj.b
+            result[obj.label]['c'] += obj.c
+            result[obj.label]['d'] += obj.d
+            result[obj.label]['e'] += obj.e
 
     # result = pd.DataFrame.from_dict(result)
     return result
@@ -39,11 +40,12 @@ def sum_module(objects, component):
 
     result[component] = {'a': 0, 'b': 0, 'c': 0, 'd': 0, 'e': 0}
     for obj in objects:
-        result[component]['a'] += obj.a
-        result[component]['b'] += obj.b
-        result[component]['c'] += obj.c
-        result[component]['d'] += obj.d
-        result[component]['e'] += obj.e
+        if obj.a is not None:
+            result[component]['a'] += obj.a
+            result[component]['b'] += obj.b
+            result[component]['c'] += obj.c
+            result[component]['d'] += obj.d
+            result[component]['e'] += obj.e
 
     return result
 
@@ -51,10 +53,10 @@ def sum_manufactured_and_bought(result_bought, result_manufactured):
     result = {'a': 0, 'b': 0, 'c': 0, 'd': 0, 'e': 0}
 
     result['a'] = result_manufactured.get('M')['a'] + result_bought.get('B')['a']
-    result['b'] = result_manufactured.get('M')['a'] + result_bought.get('B')['b']
-    result['c'] = result_manufactured.get('M')['a'] + result_bought.get('B')['c']
-    result['d'] = result_manufactured.get('M')['a'] + result_bought.get('B')['d']
-    result['e'] = result_manufactured.get('M')['a'] + result_bought.get('B')['e']
+    result['b'] = result_manufactured.get('M')['b'] + result_bought.get('B')['b']
+    result['c'] = result_manufactured.get('M')['c'] + result_bought.get('B')['c']
+    result['d'] = result_manufactured.get('M')['d'] + result_bought.get('B')['d']
+    result['e'] = result_manufactured.get('M')['e'] + result_bought.get('B')['e']
 
     return result
 

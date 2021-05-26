@@ -8,6 +8,7 @@ from graph.labels_vs_cost import labels_vs_cost
 from graph.manufactured_vs_bought import manufactured_vs_bought
 from graph.manufactured_and_bought import barras_simple
 from graph.manuforiented_true_and_false import barras_apildas
+from graph.manufactured_and_bought import barras_dobles
 
 
 # Son las condiciones para la consulta
@@ -18,7 +19,7 @@ extracted_labels = []
 extracted_labels = labels(Thermal, query_conditions)
 
 # Datos extraidos en base a las condiciones de la query
-data = data_extraction(Thermal, query_conditions)
+data = data_extraction(Thermal, query_conditions, False)
 
 result = sum_labels(data, extracted_labels)
 cantidades = ["1", "100", "1000", "10000", "50000"]
@@ -32,14 +33,14 @@ cantidades = ["1", "100", "1000", "10000", "50000"]
 # *************** MANUFACTURED vs BOUGHT ****************
 
 data_manufactured = None
-data_manufactured = data_extraction(Thermal, query_conditions)
+data_manufactured = data_extraction(Thermal, query_conditions, False)
 
 # Sumatorio de costes, unitarios, para piezas manufacturadas
 result_manufactured = sum_origin(data_manufactured, query_conditions)
 
 query_conditions['origin'] = 'B'
 data_bought = None
-data_bought = data_extraction(Thermal, query_conditions)
+data_bought = data_extraction(Thermal, query_conditions, False)
 
 # Sumatorio de costes, unitarios, para piezas compradas
 result_bought = sum_origin(data_bought, query_conditions)
@@ -48,14 +49,14 @@ result_bought = sum_origin(data_bought, query_conditions)
 query_conditions = {'manuforiented':True, 'origin':'M'}
 
 data_manufactured_manuforiented_true = None
-data_manufactured_manuforiented_true = data_extraction(Thermal, query_conditions)
+data_manufactured_manuforiented_true = data_extraction(Thermal, query_conditions, False)
 
 # Sumatorio de costes, unitarios, para piezas manufacturadas
 result_manufactured_manuforiented_true = sum_origin(data_manufactured_manuforiented_true, query_conditions)
 
 query_conditions['origin'] = 'B'
 data_bought_manuforiented_true = None
-data_bought_manuforiented_true = data_extraction(Thermal, query_conditions)
+data_bought_manuforiented_true = data_extraction(Thermal, query_conditions, False)
 
 # Sumatorio de costes, unitarios, para piezas compradas
 result_bought_manuforiented_true = sum_origin(data_bought_manuforiented_true, query_conditions)
@@ -96,12 +97,13 @@ if tipo_grafica == str(1):
     print("Antes (False) o despues(True) del MOD")
     mod = input()
     if mod == str(True):
-        barras_simple(result_bought)
-        print(result_bought)
-        # barras_dobles(result_bought, result_manufactured)
-    if mod == str(False):
         barras_simple(result_bought_manuforiented_true)
         print(result_bought_manuforiented_true)
+        # barras_dobles(result_bought, result_manufactured)
+    if mod == str(False):
+        print("False")
+        barras_simple(result_bought)
+        print(result_bought)
         # barras_dobles(result_bought_manuforiented_true, result_manufactured_manuforiented_true)
 
 
@@ -125,17 +127,36 @@ if tipo_grafica == str(4):
     origin = input()
     print("Antes (False) o despues(True) del MOD")
     mod = input()
-    query_conditions = {'manuforiented': bool(mod), 'origin': origin}
+    query_conditions = {'manuforiented': str(mod), 'origin': origin}
 
     # Lista de labels que coinciden con los criterios de la consulta (query_conditions)
     extracted_labels = []
     extracted_labels = labels(Thermal, query_conditions)
 
     # Datos extraidos en base a las condiciones de la query
-    data = data_extraction(Thermal, query_conditions)
+    data = data_extraction(Thermal, query_conditions, False)
 
     result = sum_labels(data, extracted_labels)
+    print(result)
     labels_vs_cost(result, cantidades, query_conditions)
 
-# if tipo_grafica == str(5):
-#     barras_dobles(total_cost_manufactured_false, total_cost_manufactured_true)
+if tipo_grafica == str(5):
+    query_conditions = {'manuforiented': False}
+    data_test_assembly_MOD_false = data_extraction(Thermal, query_conditions, True)
+
+    total_cost_manufactured_false['a'] += float(data_test_assembly_MOD_false[0].a)
+    total_cost_manufactured_false['b'] += float(data_test_assembly_MOD_false[0].b)
+    total_cost_manufactured_false['c'] += float(data_test_assembly_MOD_false[0].c)
+    total_cost_manufactured_false['d'] += float(data_test_assembly_MOD_false[0].d)
+    total_cost_manufactured_false['e'] += float(data_test_assembly_MOD_false[0].e)
+
+    query_conditions = {'manuforiented': True}
+    data_test_assembly_MOD_true = data_extraction(Thermal, query_conditions, True)
+
+    total_cost_manufactured_true['a'] += float(data_test_assembly_MOD_true[0].a)
+    total_cost_manufactured_true['b'] += float(data_test_assembly_MOD_true[0].b)
+    total_cost_manufactured_true['c'] += float(data_test_assembly_MOD_true[0].c)
+    total_cost_manufactured_true['d'] += float(data_test_assembly_MOD_true[0].d)
+    total_cost_manufactured_true['e'] += float(data_test_assembly_MOD_true[0].e)
+
+    barras_dobles(total_cost_manufactured_false, total_cost_manufactured_true, None)

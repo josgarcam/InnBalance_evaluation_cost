@@ -12,7 +12,7 @@ database_password = config['DATABASE']['DB_PASSWORD']
 
 def Read_table(query):
     data = []
-    
+
     try:
         conn = psycopg2.connect(host=database_host, database=database_name, user=database_user, password=database_password)
 

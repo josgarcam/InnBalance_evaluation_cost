@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+import sys
+import os
+
+PACKAGE_PARENT = '..'
+SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+
 from model.models import Anode, Cathode, Thermal
 from model.query import data_extraction
 from model.operations import sum_module, components_based_on_origin
@@ -53,6 +61,7 @@ print("Seleccione el tipo de gráfico:")
 print("1- Nº of Bought and manufactured components per module")
 print("2- Cost (%) per module base on mass production rate")
 print("3- Cost per module based on mass production rate")
+print("4- Costs per mass production rate and module - List view")
 
 tipo_grafica = input()
 
@@ -85,6 +94,16 @@ if tipo_grafica == str(3):
     print("Antes (False) o despues(True) del MOD")
     mod = input()
     if mod == str(True):
-        barras_paralelas(result_anode_manuforiented, result_cathode_manuforiented, result_thermal_manuforiented)
+        barras_paralelas(result_anode_manuforiented, result_cathode_manuforiented, result_thermal_manuforiented, mod)
     else:
-        barras_paralelas(result_anode, result_cathode, result_thermal)
+        barras_paralelas(result_anode, result_cathode, result_thermal, mod)
+
+if tipo_grafica == str(4):
+    print("Before MOD")
+    print(result_anode)
+    print(result_cathode)
+    print(result_thermal)
+    print("AFTER MOD")
+    print(result_anode_manuforiented)
+    print(result_cathode_manuforiented)
+    print(result_thermal_manuforiented)
