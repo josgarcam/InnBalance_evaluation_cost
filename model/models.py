@@ -31,6 +31,7 @@ class Cathode(db.Base):
     e = Column(Integer)
     description = Column(String)
     manuforiented = Column(Boolean)
+    estimation = Column(Boolean)
     label = Column(String)
 
 class Thermal(db.Base):
@@ -47,6 +48,7 @@ class Thermal(db.Base):
     e = Column(Integer)
     description = Column(String)
     manuforiented = Column(Boolean)
+    estimation = Column(Boolean)
     label = Column(String)
 
 
